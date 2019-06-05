@@ -45,9 +45,11 @@ def posicionObtaculo(fila,columna):
     fueraDeRango(fila - 1, columna - 1)
     if ocupado(fila-1,columna-1):
         print("un obtaculo no puede ir donde ya hay una ficha")
+        quit()
     else:
         if Frango == "fuera":
             print("un obstaculo no puede ir fuera del tablero...")
+            quit()
         elif Frango == "ok":
             tabla[fila - 1][columna - 1] = 1
 
