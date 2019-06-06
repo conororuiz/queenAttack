@@ -1,3 +1,4 @@
+import time
 def create_board(n):
     board= [0] * n
     for i in range(n):
@@ -52,10 +53,9 @@ def movements(board,row, column):
             t_col+=vectors[i][count]
             if out_of_range(board,t_row, t_col):
                 go_ahead = False
-            else:
-                if busy(board,t_row, t_col):
+            elif busy(board,t_row, t_col):
                     go_ahead = False
-                else:
+            else:
                     mov+=1
     return "movements that queen can do: "+str(mov)
 
@@ -110,5 +110,4 @@ def solver():
       else:
           print("there are more or less obstacles than the document has")
           exit()
-
 solver()
