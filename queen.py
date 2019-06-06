@@ -1,16 +1,19 @@
 out_range= ''
-board=[]
 r_row=r_column=mov=fil=col=0
 
-def crearte_board(n):
-    global board
-    rows = n
-    board = [0] * rows
-    for i in range(rows):
+def create_board(n):
+
+    board= [0] * n
+    for i in range(n):
         board[i] = [0] * n
 
-def out_of_range(row, column):
-    global board
+    return board
+
+
+#print(create_board(6))
+
+def out_of_range(board,row, column,):
+    #global board
     global out_range
     if row>=len(board) or column>=len(board):
         out_range= "fuera"
@@ -19,12 +22,12 @@ def out_of_range(row, column):
     else:
         out_range= "ok"
 
-def queen_position(row, column):
-    global board
+def queen_position(board,row, column):
+    #global board
     global out_range
     global  r_row
     global  r_column
-    out_of_range(row - 1, column - 1)
+    out_of_range(board,row - 1, column - 1)
     if out_range== "out":
         print("queen can't be out of board...")
     elif out_range== "ok":
@@ -32,18 +35,18 @@ def queen_position(row, column):
         r_row= row - 1
         r_column= column - 1
 
-def busy(row, column):
-    global board
+def busy(board,row, column):
+    #global board
     if board[row][column]==0:
         return False
     else:
         return True
 
-def obstacle_position(row, column):
-    global board
+def obstacle_position(board,row, column):
+    #global board
     global out_range
-    out_of_range(row - 1, column - 1)
-    if busy(row - 1, column - 1):
+    out_of_range(board,row - 1, column - 1)
+    if busy(board,row - 1, column - 1):
         print("an obstacle can't be where there is another object")
         quit()
     else:
@@ -53,9 +56,9 @@ def obstacle_position(row, column):
         elif out_range == "ok":
             board[row - 1][column - 1] = 1
 
-def movements(row, column):
+def movements(board,row, column):
     global out_range
-    global board
+    #global board
     global mov
     vectors=[[-1, -1], [0, -1], [1, -1], [1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0]]
     #movements
@@ -68,11 +71,11 @@ def movements(row, column):
             t_row+=vectors[i][count]
             count+=1
             t_col+=vectors[i][count]
-            out_of_range(t_row, t_col)
+            out_of_range(board,t_row, t_col)
             if out_range == "fuera":
                 go_ahead = False
             else:
-                if busy(t_row, t_col):
+                if busy(board,t_row, t_col):
                     go_ahead = False
                 else:
                     mov+=1
@@ -101,8 +104,8 @@ def solver():
         print("document dosen't have correct format")
         exit()
     total=0
-    crearte_board(size)
-    queen_position(p_queen_row, p_queen_col)
+    board=create_board(size)
+    queen_position(board,p_queen_row, p_queen_col)
     # checking there aren't obstacles
     if num_obs>=1 or num_obs==0:
       for i in range(2, len(data)):
@@ -114,16 +117,14 @@ def solver():
                      fil=int(data[i][cont])
                      cont+=1
                      col=int(data[i][cont])
-                     obstacle_position(fil, col)
+                     obstacle_position(board,fil, col)
             except:
               print("document dosen't have correct format")
               exit()
             # checking queen movements
-            movements(r_row, r_column)
+            movements(board,r_row, r_column)
       else:
           print("there are more or less obstacles than the document has")
           exit()
+
 solver()
-board.reverse()
-for i in board:
-    print(i)
