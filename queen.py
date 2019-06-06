@@ -1,4 +1,6 @@
+
 from collections import Counter
+
 
 def create_board(n):
     """
@@ -98,8 +100,11 @@ def movements(board,row,column,vector):
 
     :param vector: Is a list, that represent a move in the board
 
-    :return: The board with movements in a direction
-    """
+"""
+
+def movements(board,row, column , vector ):
+    """this function printed movements of queen in the board
+    :return: The board with movements in a direction"""
     new_x = row + vector[0]
     new_y = column + vector[1]
     count_movements = 0
@@ -109,6 +114,7 @@ def movements(board,row,column,vector):
         return board
     else:
         return board
+
 
 
 def solver():
@@ -133,8 +139,11 @@ def solver():
     for i in range(0, len(data)):
         data[i]=data[i].split()
     #operating file_data
+    size = int(data[0][0])
+    if size<=1 or size>=1000:
+        print("the board can't be less than 1 or more than 100")
+        exit()
     try:
-        size=int(data[0][0])
         num_obs = int(data[0][1])
         p_queen_row=int(data[1][0])
         p_queen_col=int(data[1][1])
